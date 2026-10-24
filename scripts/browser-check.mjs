@@ -54,7 +54,8 @@ const report = { leaks: [], failures: [], errors: [], hosts: {} };
 async function autoScroll(page) {
   await page.evaluate(async () => {
     const step = Math.round(window.innerHeight * 0.7);
-    for (let y = 0; y < document.documentElement.scrollHeight; y += step) {
+    // Capped so a page that keeps growing (lazy lists, embeds) can't scroll forever.
+    for (let y = 0, i = 0; y < document.documentElement.scrollHeight && i < 300; y += step, i++) {
       window.scrollTo(0, y);
       await new Promise((r) => setTimeout(r, 120));
     }
@@ -64,21 +65,33 @@ async function autoScroll(page) {
   });
 }
 
+const VISIT_TIMEOUT_MS = 120000;
+
 async function visit(context, vp, route) {
   const page = await context.newPage();
   page.on("pageerror", (e) => report.errors.push({ route, vp: vp.name, error: String(e).slice(0, 300) }));
+  let timer;
+  const timeout = new Promise((_, reject) => {
+    timer = setTimeout(() => reject(new Error(`timed out after ${VISIT_TIMEOUT_MS / 1000}s`)), VISIT_TIMEOUT_MS);
+  });
   try {
-    await page.goto(BASE + route, { waitUntil: "load", timeout: 60000 });
-    await autoScroll(page);
-    await page.waitForLoadState("networkidle", { timeout: 15000 }).catch(() => {});
-    await page.waitForTimeout(800);
-    const slug = (route === "/" ? "index" : route.slice(1).replaceAll("/", "__")) + `.${vp.name}.jpg`;
-    await page.screenshot({ path: path.join(OUT, "shots", slug), fullPage: true, scale: "css", type: "jpeg", quality: 85 });
+    await Promise.race([capture(page, vp, route), timeout]);
   } catch (e) {
     report.errors.push({ route, vp: vp.name, error: `visit: ${String(e).slice(0, 300)}` });
   } finally {
+    clearTimeout(timer);
+    // Closing the page also aborts a capture that is still running after a timeout.
     await page.close();
   }
+}
+
+async function capture(page, vp, route) {
+  await page.goto(BASE + route, { waitUntil: "load", timeout: 60000 });
+  await autoScroll(page);
+  await page.waitForLoadState("networkidle", { timeout: 15000 }).catch(() => {});
+  await page.waitForTimeout(800);
+  const slug = (route === "/" ? "index" : route.slice(1).replaceAll("/", "__")) + `.${vp.name}.jpg`;
+  await page.screenshot({ path: path.join(OUT, "shots", slug), fullPage: true, scale: "css", type: "jpeg", quality: 85 });
 }
 
 async function runViewport(browser, vp) {
