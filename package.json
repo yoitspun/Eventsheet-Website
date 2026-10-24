@@ -1,0 +1,15 @@
+{
+  "name": "eventsheet-website",
+  "private": true,
+  "description": "Self-hosted mirror of the eventsheet.com Framer site",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "node server.js",
+    "mirror": "python3 scripts/mirror.py",
+    "check:live": "node scripts/browser-check.mjs live --base https://eventsheet.com --out .check/live",
+    "check:local": "node scripts/browser-check.mjs local --base http://localhost:3000 --out .check/local"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

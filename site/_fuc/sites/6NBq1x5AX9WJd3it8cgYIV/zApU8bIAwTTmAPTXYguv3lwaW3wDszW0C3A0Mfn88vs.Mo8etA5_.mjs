@@ -1,0 +1,7 @@
+import{t as e}from"./rolldown-runtime.Dh6celcD.mjs";import{J as t,Q as n,T as r}from"./framer.CNueRUwu.mjs";async function i(e,t,n){let r=s[e],i=r?await r(t,n):void 0,o={bodyEnd:[],bodyStart:[],headEnd:[],headStart:[]};for(let t of a){if(t.pageIds&&!t.pageIds.has(e))continue;let n=t.code(i);n&&o[t.placement].push({...t,code:n})}return o}var a,o,s,c,l;e((()=>{n(),a=[{code:e=>`<style type="text/css">
+.framer-text.framer-image{
+
+      width: 100% !important;
+
+}</style>`,id:`legacy-headStart-yDWllRnyI`,loadMode:`once`,name:`Custom Code (Legacy)`,pageIds:new Set([`yDWllRnyI`]),placement:`headStart`}],o=new r,s={yDWllRnyI:async(e,n)=>{let r={from:{alias:`yDWllRnyI`,data:(await import(`./OW_WTYyZx-ZleundjMhBrEMjWhrx9AIfLwKX9Qnmf24.CmFCNozU.mjs`)).default,type:`Collection`},select:[],where:t(e,`yDWllRnyI`)},i=await o.query(r,n);if(i.length===0)throw Error(`No data matches pathVariables`);return i[0]}},c={bodyEnd:[`legacy-bodyEnd-plugin-33d9eb`,`W3dXCmrok`],bodyStart:[`legacy-bodyStart`,`legacy-bodyStart-plugin-33d9eb`],headEnd:[`legacy-headEnd`],headStart:[`legacy-headStart`,`legacy-headStart-yDWllRnyI`]},l={exports:{getSnippets:{type:`function`,annotations:{framerContractVersion:`1`}},snippetsSorting:{type:`variable`,annotations:{framerContractVersion:`1`}},__FramerMetadata__:{type:`variable`}}}}))();export{l as __FramerMetadata__,i as getSnippets,c as snippetsSorting};
+//# sourceMappingURL=zApU8bIAwTTmAPTXYguv3lwaW3wDszW0C3A0Mfn88vs.Mo8etA5_.mjs.map

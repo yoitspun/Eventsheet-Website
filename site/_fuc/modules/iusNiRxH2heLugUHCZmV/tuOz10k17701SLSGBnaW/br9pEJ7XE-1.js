@@ -1,0 +1,2 @@
+let e=[];export async function resolveRichText(t){let i=e[t];if(i)return await i();}
+export const __FramerMetadata__ = {"exports":{"resolveRichText":{"type":"function","annotations":{"framerContractVersion":"1"}},"__FramerMetadata__":{"type":"variable"}}}

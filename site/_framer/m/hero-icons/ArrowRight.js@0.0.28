@@ -1,0 +1,8 @@
+/*
+ * ArrowRight (hero-icons/ArrowRight@0.0.28)
+ *
+ * Learn More: https://www.framer.com/asset-urls
+ */
+
+export * from "https://framerusercontent.com/modules/9ISWZH8j2CKbiegnQ8di/He3f5Z1FeMLXPFh5Cppc/ArrowRight.js"
+export { default } from "https://framerusercontent.com/modules/9ISWZH8j2CKbiegnQ8di/He3f5Z1FeMLXPFh5Cppc/ArrowRight.js"

@@ -1,0 +1,2 @@
+import{t as e}from"./rolldown-runtime.Dh6celcD.mjs";function t(e,t){return{description:`Eventsheet lets you launch AI-powered ads in a few clicks. Automate campaigns, scale creative testing, and drive more sales with less effort.`,favicon:`https://framerusercontent.com/assets/oIKFlnLMDxdFA83A0YqHja4VbKs.png`,robots:`max-image-preview:large`,socialImage:`https://framerusercontent.com/assets/3jpEcbxtRMPpNI4ACO4HU925g.png`,title:`Eventsheet`}}var n=e((()=>{}));export{t as n,n as t};
+//# sourceMappingURL=shared-lib.7sjCuyEr.mjs.map

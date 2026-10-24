@@ -1,0 +1,5 @@
+node_modules/
+.check/
+*.tmp
+__pycache__/
+.DS_Store
