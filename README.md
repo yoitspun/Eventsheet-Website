@@ -39,6 +39,16 @@ CMS collections (blog, docs, updates, use cases, industries) are binary
 URLs inside them are rewritten as Framer's CMS reader decodes each string (see
 `CMS_READ_STRING` in `server.js`).
 
+## Hosting
+
+Railway project `eventsheet-website`, service `website`, deploys this branch on
+every push and runs `node server.js` (see `railway.json`). It is reachable at
+https://website-production-b094.up.railway.app until eventsheet.com is pointed at it.
+
+To move the domain: add `eventsheet.com` (and `www`) as custom domains on the
+service in Railway, create the DNS records Railway shows, then unpublish the Framer
+site. Page canonical URLs already point at https://eventsheet.com.
+
 ## Configuration
 
 | Variable | Default | Purpose |
