@@ -1,0 +1,8 @@
+/*
+ * BookOpen (hero-icons/BookOpen@0.0.28)
+ *
+ * Learn More: https://www.framer.com/asset-urls
+ */
+
+export * from "https://framerusercontent.com/modules/65PQnL5E3OqA3XZYwZZD/vK7KvM62uwWI0NinNdKv/BookOpen.js"
+export { default } from "https://framerusercontent.com/modules/65PQnL5E3OqA3XZYwZZD/vK7KvM62uwWI0NinNdKv/BookOpen.js"

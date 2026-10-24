@@ -1,0 +1,8 @@
+/*
+ * CaretLeft (phosphor-icons/CaretLeft@0.0.57)
+ *
+ * Learn More: https://www.framer.com/asset-urls
+ */
+
+export * from "https://framerusercontent.com/modules/v0XJQW79HlCddIsaYfd4/9xjeXGqCauKcyBKU8czm/CaretLeft.js"
+export { default } from "https://framerusercontent.com/modules/v0XJQW79HlCddIsaYfd4/9xjeXGqCauKcyBKU8czm/CaretLeft.js"

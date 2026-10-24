@@ -1,0 +1,8 @@
+/*
+ * Home (hero-icons/Home@0.0.28)
+ *
+ * Learn More: https://www.framer.com/asset-urls
+ */
+
+export * from "https://framerusercontent.com/modules/eTFACFXlvp5mgG2YpBpd/wqDmZcxkThZ32xkBavIK/Home.js"
+export { default } from "https://framerusercontent.com/modules/eTFACFXlvp5mgG2YpBpd/wqDmZcxkThZ32xkBavIK/Home.js"

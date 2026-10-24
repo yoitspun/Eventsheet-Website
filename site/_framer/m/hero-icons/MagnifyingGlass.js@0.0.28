@@ -1,0 +1,8 @@
+/*
+ * MagnifyingGlass (hero-icons/MagnifyingGlass@0.0.28)
+ *
+ * Learn More: https://www.framer.com/asset-urls
+ */
+
+export * from "https://framerusercontent.com/modules/Lbw7amODUYmZHrfxD0jp/B5vQlZZ1505uubQ7H5VT/MagnifyingGlass.js"
+export { default } from "https://framerusercontent.com/modules/Lbw7amODUYmZHrfxD0jp/B5vQlZZ1505uubQ7H5VT/MagnifyingGlass.js"
