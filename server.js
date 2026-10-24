@@ -10,6 +10,7 @@ const fs = require("fs");
 const path = require("path");
 const zlib = require("zlib");
 const crypto = require("crypto");
+const { handleForm, logFormsSetup, FORMS_API } = require("./forms");
 
 const SITE = path.join(__dirname, "site");
 const PAGES = path.join(SITE, "pages");
@@ -98,6 +99,8 @@ function originFor(req) {
 function rewrite(text, origin, ext) {
   for (const [from, to] of Object.entries(MIRRORS)) text = text.replaceAll(from, origin + to);
   text = text.replaceAll(EDITOR_BAR_IMPORT, EDITOR_BAR_STUB);
+  // Framer forms post here instead of to Framer (see forms.js).
+  text = text.replaceAll(FORMS_API, `${origin}/_forms/`);
   if (ext === ".mjs" || ext === ".js") {
     // Split so the host rewrite above can't touch the search string.
     const search = JSON.stringify("https://framerusercontent" + ".com/");
@@ -263,6 +266,14 @@ function notFound(req, res, origin) {
 const server = http.createServer((req, res) => {
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader("Strict-Transport-Security", "max-age=31536000");
+  const form = /^\/_forms\/([0-9a-f-]{36})\/submit$/.exec(req.url.split("?")[0]);
+  if (form) {
+    return handleForm(req, res, form[1]).catch((err) => {
+      console.error("[forms]", err);
+      if (!res.headersSent) res.writeHead(500);
+      res.end();
+    });
+  }
   if (req.method !== "GET" && req.method !== "HEAD") {
     res.writeHead(405, { Allow: "GET, HEAD" });
     return res.end();
@@ -302,4 +313,7 @@ const server = http.createServer((req, res) => {
   }
 });
 
-server.listen(PORT, () => console.log(`Serving ${routes.size} pages on :${PORT}`));
+server.listen(PORT, () => {
+  console.log(`Serving ${routes.size} pages on :${PORT}`);
+  logFormsSetup();
+});

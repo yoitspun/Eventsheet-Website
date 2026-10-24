@@ -23,6 +23,7 @@ PORT=8080 npm start
 | `site/_rive/`, `site/_unpkg/` | Rive animation files and the Rive player runtime |
 | `site/_framer/m/` | Framer icon library modules (Hero and Phosphor icons) |
 | `server.js` | The web server |
+| `forms.js` | Receives the Framer forms and emails submissions |
 | `scripts/mirror.py` | Re-downloads the site from eventsheet.com while it is still on Framer |
 | `scripts/browser-check.mjs` | Loads every page in Chromium to find runtime assets and to verify the copy |
 | `scripts/compare-shots.py` | Pixel-compares live vs local screenshots |
@@ -55,19 +56,36 @@ site. Page canonical URLs already point at https://eventsheet.com.
 | --- | --- | --- |
 | `PORT` | `3000` | Port to listen on (Railway sets this) |
 | `PUBLIC_ORIGIN` | request host | Pin the origin used in rewritten asset URLs, e.g. `https://eventsheet.com` |
+| `RESEND_API_KEY` | | Resend API key for form emails |
+| `MAIL_FROM` | | Sender on a domain verified in Resend, e.g. `Eventsheet <forms@eventsheet.com>` |
+| `FORMS_TO` | `pun@eventsheet.com` | Where form submissions are emailed |
+| `RECAPTCHA_SECRET` | | Optional reCAPTCHA secret to verify form tokens server-side |
 
 ## Forms
 
-Two forms are native Framer forms that post to `api.framer.com` and need a new
-backend once the Framer site is gone:
+The two native Framer forms post to this server instead of Framer
+(`/_forms/<id>/submit`, handled by `forms.js`), and each submission is emailed to
+`FORMS_TO` through [Resend](https://resend.com). Replying to the email replies to
+the visitor.
 
-| Framer form id | Where |
-| --- | --- |
-| `55f4c20d-354d-41c9-bdb2-3fea0a28ecae` | `/contact-us`, `/partners/50pros`, `/partners/ticketsauce` |
-| `e6090b99-df84-4f99-9297-b430550f320f` | the form on blog posts |
+| Framer form id | Form | Where |
+| --- | --- | --- |
+| `55f4c20d-354d-41c9-bdb2-3fea0a28ecae` | Contact form | `/contact-us`, `/partners/50pros`, `/partners/ticketsauce` |
+| `e6090b99-df84-4f99-9297-b430550f320f` | Blog signup form | blog posts |
 
-The two HubSpot embedded forms (portal `44731152`) load from HubSpot and keep
-working as they are.
+Spam protection: Framer's proof-of-work token is checked (and can't be reused),
+each IP can send 5 forms per 10 minutes, and the site's reCAPTCHA must be solved in
+the browser. Setting `RECAPTCHA_SECRET` also verifies the reCAPTCHA token with Google.
+
+The reCAPTCHA keys only allow eventsheet.com, so the forms can't be submitted from
+the railway.app address or localhost until the domain moves (or those domains are
+added to the keys in the reCAPTCHA admin).
+
+Without `RESEND_API_KEY` and `MAIL_FROM`, submissions are written to the server log
+instead of emailed, so nothing is lost.
+
+The two HubSpot embedded forms (portal `44731152`, on `/ad/music-artists` and
+`/events/pollstarlive25`) load from HubSpot and keep working as they are.
 
 ## Refreshing the copy
 
